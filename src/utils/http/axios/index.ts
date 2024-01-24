@@ -17,7 +17,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: any) => {
     const res = response.data
-    if (res.code !== 200) {
+    if (res.status !== 200) {
       return Promise.reject(new Error(res.message || "Error"))
     } else {
       return res

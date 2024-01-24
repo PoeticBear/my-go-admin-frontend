@@ -40,5 +40,9 @@ import { PageHeader } from "./components/Header"
     z-index: 13;
     transition: all 0.2s ease-in-out;
   }
+
+  .n-layout-header.n-layout-header--absolute-positioned {
+    z-index: 11;
+  }
 }
 </style>

@@ -86,7 +86,7 @@ const LOGIN_NAME = PageEnum.BASE_LOGIN_NAME
 
 const formInline = reactive({
   username: "admin",
-  password: "123456",
+  password: "admin",
 })
 
 const rules = {
@@ -112,26 +112,20 @@ const handleSubmit = (e: any) => {
       }
 
       try {
-        const { code, message } = await userStore.login(params)
-        // message.destroyAll()
-        if (code == ResultEnum.SUCCESS) {
+        const { status } = await userStore.login(params)
+        if (status == ResultEnum.SUCCESS) {
           const toPath = decodeURIComponent(
             (route.query?.redirect || "/") as string,
           )
-          // message.success("登录成功,即将进入系统")
           if (route.name === LOGIN_NAME) {
             router.replace("/")
           } else {
             router.replace(toPath)
           }
-        } else {
-          // message.info(msg || "登录失败")
         }
       } finally {
         loading.value = false
       }
-    } else {
-      // message.error("请填写完整信息")
     }
   })
 }

@@ -9,14 +9,11 @@ export default defineComponent({
   name: "AsideMenu",
   setup() {
     const menus = ref<any[]>([])
-    menus.value = [
-      {
-        disabled: false,
-        key: "home",
-        label: "首页",
-        show: true,
-      },
-    ]
+
+    // function updateMenu() {
+    //   menus.value = generatorMenu()
+    // }
+
     return {
       menus,
     }

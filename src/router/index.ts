@@ -1,7 +1,7 @@
 import { PageEnum } from "@/enums/pageEnum"
 import { App } from "vue"
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
-import { Layout } from "@/router/constant"
+import { createRouterGuards } from "./guards"
 // import { PageEnum } from "@/enums/pageEnum";
 
 // import type { IModuleType } from "./types"
@@ -40,35 +40,13 @@ export const LoginRoute: RouteRecordRaw = {
   },
 }
 
-export const UserRoute: RouteRecordRaw = {
-  path: "/user",
-  name: "User",
-  redirect: "/user/list",
-  component: Layout,
-  meta: {
-    title: "用户管理",
-    icon: "user",
-  },
-  children: [
-    {
-      path: "list",
-      name: "list",
-      meta: {
-        title: "用户列表",
-        icon: "user",
-      },
-      component: () => import("@/views/user/list/index.vue"),
-    },
-  ],
-}
-
 export const asyncRoutes = []
 
-export const unAuthRoutes = [RootRoute, LoginRoute, UserRoute]
+export const constantRouter: RouteRecordRaw[] = [RootRoute, LoginRoute]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: unAuthRoutes,
+  routes: constantRouter,
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 }),
 })
@@ -76,7 +54,7 @@ const router = createRouter({
 export function setupRouter(app: App) {
   app.use(router)
   // create router guard
-  // createRouterGuards(router)
+  createRouterGuards(router)
 }
 
 export default router

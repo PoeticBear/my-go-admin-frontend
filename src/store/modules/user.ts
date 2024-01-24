@@ -2,8 +2,12 @@ import { defineStore } from "pinia"
 import { store } from "@/store"
 import { storage } from "@/utils/Storage"
 import { ACCESS_TOKEN, CURRENT_USER } from "../mutation-types"
-import { login } from "@/api/system/user"
+import {
+  getUserInfo as getUserInfoApi,
+  login as loginApi,
+} from "@/api/system/user"
 import { ResultEnum } from "@/enums/httpEnum"
+import type { GetUserInfoParams } from "@/types/apiTypes"
 
 export type UserInfoType = {
   name: string
@@ -45,7 +49,7 @@ export const useUserStore = defineStore({
     getPermissions(): string[] {
       return this.permissions
     },
-    getInfo(): UserInfoType {
+    getUserInfo(): UserInfoType {
       return this.info
     },
   },
@@ -73,19 +77,41 @@ export const useUserStore = defineStore({
      * @description: 登录
      */
     async login(params: any) {
-      const response = await login(params)
-      console.log("response", response)
-      const { code, data } = response as any
+      const response = await loginApi(params)
+      const { status, data } = response as any
       const { token } = data
-      if (code === ResultEnum.SUCCESS) {
+
+      if (status === ResultEnum.SUCCESS) {
         localStorage.setItem("token", token)
-        // const ex = 7 * 24 * 60 * 60
-        // storage.set(ACCESS_TOKEN, data.token, ex)
-        // storage.set(CURRENT_USER, result, ex)
         this.setToken(token)
-        // this.setInfo(result)
       }
       return response
+    },
+
+    async getInfo(params?: GetUserInfoParams) {
+      params = {
+        userId: 14,
+      }
+      const result: any = await getUserInfoApi(params)
+      if (result.permissions.length > 0 && result.permissions) {
+        const permissionsList = result.permissions
+        this.setPermissions(permissionsList)
+        this.setInfo(result)
+      } else {
+        throw Error("getInfo: permissionsList must be a non-null array !")
+      }
+      // this.setAvatar(result.avatar)
+      return result
+    },
+
+    /**
+     * @description: 登出
+     */
+    async logout() {
+      this.setPermissions([])
+      this.setInfo({ name: "", email: "" })
+      this.setToken("")
+      localStorage.removeItem("token")
     },
   },
 })

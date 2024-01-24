@@ -4,7 +4,7 @@ export interface LoginParams {
 }
 
 export interface GetUserInfoParams {
-  userId: number
+  token: string
 }
 
 export interface BasicResponseModel<T = any> {

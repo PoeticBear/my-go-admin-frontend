@@ -13,26 +13,16 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "esnext"
-    ],
-    "typeRoots": [
-      "./node_modules/@types/",
-      "./types"
-    ],
+    "lib": ["dom", "esnext"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
     "noImplicitAny": false,
     "skipLibCheck": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "/#/*": [
-        "types/*"
-      ]
+      "@/*": ["src/*"],
+      "/#/*": ["types/*"]
     }
   },
   "include": [
@@ -49,9 +39,5 @@
     "vite.config.ts",
     "typings.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.js"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

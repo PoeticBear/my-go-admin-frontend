@@ -7,6 +7,10 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config: any) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      config.headers["Authorization"] = token
+    }
     return config
   },
   error => {

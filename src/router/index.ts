@@ -25,7 +25,7 @@ import { createRouterGuards } from "./guards"
 export const RootRoute: RouteRecordRaw = {
   path: "/",
   name: "Root",
-  redirect: PageEnum.BASE_HOME,
+  redirect: PageEnum.BASE_LOGIN,
   meta: {
     title: "Root",
   },
